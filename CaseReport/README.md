@@ -4,9 +4,10 @@
 
 ## 目录结构
 
-- `getCaseReports.py`：主脚本，读取 Excel 文件中的下载链接，使用 Selenium 自动化浏览器批量下载 PDF。
-- `data/`：可选，存放已下载的 PDF 文件或下载记录。
-- `meta/`：如 `Case Reports in Transplantation_298.xlsx`，包含论文的下载链接。
+- `getLink.py`: 获取pdf下载链。
+- `getCaseReports.py`: 主脚本，读取 Excel 文件中的下载链接，使用 Selenium 自动化浏览器批量下载 PDF。
+- `data/`: 存放已下载的 PDF 文件或下载记录。
+- `meta/`: 存放下载数据元信息，如 `Case Reports in Transplantation_298.xlsx`，包含论文的下载链接。
 
 ## 使用步骤
 
