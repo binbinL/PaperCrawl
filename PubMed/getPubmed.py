@@ -20,14 +20,25 @@ OUTPUT_JSON = opj(SAVE_DIR,'pubmed_results.json')  # 输出JSON文件名
 FAILED_DOWNLOADS = opj(SAVE_DIR,'failed_downloads.txt') # 保存下载失败的链接
 PDF_DIR = opj(SAVE_DIR, "pdfs")  # PDF保存目录
 DELAY = 0.34  # 遵守NCBI的请求频率限制(每秒不超过3次)
+start_year = 2025  # 起始年份
+end_year = 2026    # 结束年份
 
-def search_pubmed(terms, max_results, API_KEY = None):
+def search_pubmed(terms, max_results, API_KEY = None, start_year=None, end_year=None):
     """在PubMed上搜索多个关键词组合"""
     query = " OR ".join(terms)
+    mindate = f"{start_year}" if start_year else None
+    maxdate = f"{end_year}" if end_year else None
+
+    handle = Entrez.esearch(
+        db="pubmed",
+        term=query,
+        retmax=max_results,
+        api_key=API_KEY,
+        datetype="pdat",   # 发表日期
+        mindate=mindate,
+        maxdate=maxdate,
+    )
     print(f"搜索查询: {query}")
-    
-    # 搜索并获取PMID列表
-    handle = Entrez.esearch(db="pubmed", term=query, retmax=max_results, api_key=API_KEY)
     record = Entrez.read(handle)
     handle.close()
     
