@@ -1,6 +1,7 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 from tqdm import tqdm
 # try sth
@@ -27,8 +28,8 @@ def getPDF(dst,url_list):
         # options.add_argument('--headless')  # 设置为无头
         # options.add_argument('--disable-gpu')  # 设置没有使用gpu
 
-        path = '/usr/local/bin/chromedriver'  # chromedriver的路径
-        service = Service(executable_path=path)
+        # Use webdriver-manager to automatically get the correct ChromeDriver version
+        service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=options)
         try:
             # driver.get("https://onlinelibrary.wiley.com/doi/pdfdirect/10.1155/crh/7154679?download=true")
@@ -47,7 +48,7 @@ def readfile(file_path):
 
 if __name__ == "__main__":
     dst = '/Users/binnn/workspace/PaperCrawl/CaseReport/transplantation'
-    filepath = '/Users/binnn/workspace/PaperCrawl/CaseReport/Case Reports in Transplantation_298.xlsx'
+    filepath = '/Users/binnn/workspace/PaperCrawl/CaseReport/meta/Case Reports in Transplantation_298.xlsx'
     urllist = readfile(filepath)
     getPDF(dst,urllist)
 
